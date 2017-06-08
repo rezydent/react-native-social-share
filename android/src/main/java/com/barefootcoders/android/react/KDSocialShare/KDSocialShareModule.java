@@ -32,7 +32,7 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void tweet(ReadableMap options, Callback callback) {
     try {
-      String shareText = options.getString("text");
+      String shareText = options.getString("link");
 
       if (doesPackageExist("com.twitter.android")) {
         try {
@@ -66,6 +66,7 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
         String shareUrl = options.getString("link");
         String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + shareUrl;
         shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       } else {
         if (options.hasKey("text") && !doesPackageExist("com.facebook.katana")) {
           callback.invoke("error", "If text is provided to Facebook sharing, the application must be installed");
@@ -77,7 +78,7 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
 
       reactContext.startActivity(shareIntent);
     } catch (Exception ex) {
-      callback.invoke("error");
+      callback.invoke("error", ex.getMessage());
     }
   }
 
@@ -113,7 +114,7 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
   }
 
   private void tweetViaWebPopup(String shareText) throws Exception {
-    String tweetUrl = "https://twitter.com/intent/tweet?text=" + shareText;
+    String tweetUrl = "https://twitter.com/intent/tweet?url=" + shareText;
     Uri uri = Uri.parse(tweetUrl);
     Intent shareIntent = new Intent(Intent.ACTION_VIEW, uri);
     shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
