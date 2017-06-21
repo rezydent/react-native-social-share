@@ -62,11 +62,16 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
         shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setPackage("com.facebook.katana");
       } else if (options.hasKey("link")) {
-        String shareUrl = options.getString("link");
+        /*String shareUrl = options.getString("link");
         String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + shareUrl;
         shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
-        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
+        // Opening browser doesn't work without the flag, and it breaks browser closing anyway
+        callback.invoke("error", "No app installed");
+        return;
       } else {
         if (options.hasKey("text") && !doesPackageExist("com.facebook.katana")) {
           callback.invoke("error", "If text is provided to Facebook sharing, the application must be installed");
