@@ -69,7 +69,6 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
         String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.encode(shareUrl);
         shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        return;
       } else {
         if (options.hasKey("text") && !doesPackageExist("com.facebook.katana")) {
           callback.invoke("error", "If text is provided to Facebook sharing, the application must be installed");
