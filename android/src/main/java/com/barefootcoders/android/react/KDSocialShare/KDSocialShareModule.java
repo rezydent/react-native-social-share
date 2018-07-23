@@ -65,12 +65,10 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shareIntent.setPackage("com.facebook.katana");
       } else if (options.hasKey("link")) {
-        /*String shareUrl = options.getString("link");
-        String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + shareUrl;
+        String shareUrl = options.getString("link");
+        String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.encode(shareUrl);
         shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
-        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
-        // Opening browser doesn't work without the flag, and it breaks browser closing anyway
-        callback.invoke("error", "No app installed");
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return;
       } else {
         if (options.hasKey("text") && !doesPackageExist("com.facebook.katana")) {
@@ -119,7 +117,7 @@ public class KDSocialShareModule extends ReactContextBaseJavaModule {
   }
 
   private void tweetViaWebPopup(String shareText) throws Exception {
-    String tweetUrl = "https://twitter.com/intent/tweet?url=" + shareText;
+    String tweetUrl = "https://twitter.com/intent/tweet?text=" + Uri.encode(shareText);
     Uri uri = Uri.parse(tweetUrl);
     Intent shareIntent = new Intent(Intent.ACTION_VIEW, uri);
     shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

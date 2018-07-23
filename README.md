@@ -16,30 +16,33 @@ Let me know how it works.
 
 
 
-![Animation](https://raw.githubusercontent.com/doefler/react-native-social-share/master/animation-looping.gif)
+![Animation](https://raw.githubusercontent.com/doefler/react-native-social-share/master/assets/animation-looping.gif)
+
 
 ## Getting started
 
 1. `npm install react-native-social-share --save`
-2. In XCode, in the project navigator right click `Libraries` ➜ `Add Files to [your project's name]`
-3. Go to `node_modules` ➜ `react-native-social-share`➜ iOS and add `KDSocialShare.h` and `KDSocialShare.m` 
-4. Go to your project's `Build Phases` ➜ `Link Binary With Libraries` phase
-5. Add `Social.framework` to ➜ `Link Binary With Libraries` build phase of your project (click the '+' and search for 'social').
-6. Run your project (`Cmd+R`)
+2. `react-native link`
+3. In XCode, in the project navigator right click `Libraries` ➜ `Add Files to [your project's name]`
+4. Go to `node_modules` ➜ `react-native-social-share`➜ iOS and add `KDSocialShare.h` and `KDSocialShare.m` 
+5. Go to your project's `Build Phases` ➜ `Link Binary With Libraries` phase
+6. Add `Social.framework` to ➜ `Link Binary With Libraries` build phase of your project (click the '+' and search for 'social').
+7. Add 'LSApplicationQueriesSchemes' key (Type: Array) with items (Type: String) 'fb' and 'twitter'  to `Info.plist` of your project 
+8. Run your project (`Cmd+R`)
 
 Now you can implement the share popups in your react native code.
 
 ## Example of implementation
 
 First you should make the native implementation available in the react code by inserting the following line in the top of the file
-```
+``` JavaScript
 import {
   shareOnFacebook,
   shareOnTwitter,
 } from 'react-native-social-share';
 ```
 After doing that you will be able to popup the share views from your own functions. I made two examples below, one for Facebook and one for Twitter
-```
+``` JavaScript
   tweet : function() {
 
     shareOnTwitter({
@@ -116,7 +119,7 @@ You can use these callbacks to present alerts to the user. For example tell the 
 
 
 ## The full example code
-```
+``` JavaScript
 'use strict';
 
 var React = require('react-native');
@@ -223,7 +226,7 @@ AppRegistry.registerComponent('ReactNativeSocialShare', () => ReactNativeSocialS
 
 ## Done
 
-![Screenshot](https://raw.githubusercontent.com/doefler/react-native-social-share/master/still.png)
+![Screenshot](https://raw.githubusercontent.com/doefler/react-native-social-share/master/assets/still.png)
 
 
 ## Who is using it
